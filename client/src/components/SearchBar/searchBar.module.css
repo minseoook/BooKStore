@@ -1,0 +1,48 @@
+.container {
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid gainsboro;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  position: relative;
+}
+.container input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding-left: 45px;
+  font-size: 25px;
+  border-radius: 20px 0 0 20px;
+  color: var(--text-primary);
+  background-color: var(--background);
+}
+
+.container img {
+  width: auto;
+  height: 37px;
+  padding-right: 30px;
+  border-radius: 0 20px 20px 0;
+}
+.searchContainer {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  left: 29%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  color: var(--text-primary);
+  padding: 10px 10px;
+}
+.searchTab {
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 10px 10px;
+}
+.searchTab:hover {
+  cursor: pointer;
+  background-color: gainsboro;
+}
