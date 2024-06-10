@@ -12,6 +12,7 @@ const state = {
   theme: "light" as themeName,
   toggleTheme: () => {},
 };
+
 type Props = {
   children: React.ReactNode;
 };
@@ -33,7 +34,9 @@ export const ThemeProvider = ({ children }: Props) => {
     const savedTHemeName = localStorage.getItem(
       THEME_LOCALSTORAGE_KEY
     ) as themeName;
-    setTheme(savedTHemeName);
+    if (savedTHemeName) {
+      setTheme(savedTHemeName);
+    }
   }, []);
 
   return (
