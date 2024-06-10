@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import "./App.css";
 import { ThemeContext } from "./context/themeContext";
 
@@ -9,6 +9,9 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Error from "./pages/Error/Error";
 import Books from "./pages/Books/Books";
+import { useAuthStore } from "./store/authStore";
+import { jwtDecode } from "jwt-decode";
+import { refresh } from "./api/auth.api";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +54,33 @@ const router = createBrowserRouter([
 ]);
 function App() {
   const { theme } = useContext(ThemeContext);
+  const { token, logoutAction, loginAction } = useAuthStore();
+
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      if (token) {
+        const currentDate = new Date();
+        const decodedToken = jwtDecode(token);
+
+        if (decodedToken && decodedToken.exp) {
+          if (decodedToken.exp * 1000 < currentDate.getTime()) {
+            try {
+              const data = await refresh();
+              loginAction(data.accessToken);
+            } catch (error) {
+              logoutAction();
+            }
+          }
+        } else {
+          logoutAction();
+        }
+      } else {
+        logoutAction();
+      }
+    };
+
+    checkTokenValidity();
+  }, [token, loginAction, logoutAction]);
 
   return (
     <div data-theme={theme} className="app-container">

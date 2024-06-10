@@ -62,7 +62,7 @@ authhttpClient.interceptors.response.use(
     //로그인 만료 처리
     if (error.response && error.response.status === 401) {
       useAuthStore.getState().logoutAction();
-      window.location.href = "/login";
+      // window.location.href = "/login";
       return;
     }
     return Promise.reject(error);

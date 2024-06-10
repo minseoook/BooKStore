@@ -231,7 +231,7 @@ const login = (req, res) => {
         { id: result[0].id },
         process.env.ACCESSJWTKEY,
         {
-          expiresIn: "1h",
+          expiresIn: "30m",
           issuer: "minseok",
         }
       );
@@ -273,7 +273,7 @@ const refresh = (req, res) => {
     }
 
     const accessToken = jwt.sign({ id: result.id }, process.env.ACCESSJWTKEY, {
-      expiresIn: "1h",
+      expiresIn: "30m",
       issuer: "minseok",
     });
 
