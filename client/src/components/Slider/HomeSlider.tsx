@@ -2,9 +2,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styled from "./homeslider.module.css";
-import img1 from "../../../public/images/pexels-maxfrancis-2246476.jpg";
-import img2 from "../../../public/images/pexels-pixabay-301920.jpg";
-import img3 from "../../../public/images/pexels-rickyrecap-1907785.jpg";
+import img1 from "../../images/slideimages/pexels-maxfrancis-2246476.jpg";
+import img2 from "../../images/slideimages/pexels-pixabay-301920.jpg";
+import img3 from "../../images/slideimages/pexels-rickyrecap-1907785.jpg";
 const HomeSlider = () => {
   const settings = {
     dots: true,

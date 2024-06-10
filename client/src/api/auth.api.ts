@@ -26,3 +26,13 @@ export const logout = async () => {
   const response = await httpClient.post("users/logout");
   return response.data;
 };
+
+export const resetPasswordRequest = async (email: { email: string }) => {
+  const response = await httpClient.post("/users/reset", email);
+  return response.data;
+};
+
+export const resetPassword = async (user: data) => {
+  const response = await httpClient.put("/users/reset", user);
+  return response.data;
+};

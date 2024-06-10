@@ -1,29 +1,28 @@
-import { Link, useNavigate } from "react-router-dom";
-import styled from "./login.module.css";
 import { useState } from "react";
-import { login } from "../../api/auth.api";
-import { useAuthStore } from "../../store/authStore";
+import styled from "./resetpasswordform.module.css";
+import { resetPassword } from "../../api/auth.api";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const ResetPasswordForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { loginAction } = useAuthStore();
-  const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     try {
       e.preventDefault();
-      const res = await login({ email, password });
-      console.log(res);
-      loginAction(res.accessToken);
-      navigate("/");
+      await resetPassword({ email, password });
+      alert("비밀번호 변경 성공");
+      navigate("/login");
     } catch (err) {
-      alert("아이디 혹은 비밀번호가 틀립니다");
+      alert("비밀번호 변경 실패");
     }
   };
+
   return (
     <div className={styled.container}>
-      <h1>로그인</h1>
-      <form onSubmit={onSubmit}>
+      <h1>비밀번호 변경</h1>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="email" className={styled.labelEmail}>
           이메일
         </label>
@@ -47,14 +46,11 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" className={styled.button}>
-          로그인
+          비밀번호 변경
         </button>
-        <Link to="/resetPassword" className={styled.resetbutton}>
-          비밀번호를 잊으셨나요?
-        </Link>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default ResetPasswordForm;

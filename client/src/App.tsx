@@ -12,6 +12,7 @@ import Books from "./pages/Books/Books";
 import { useAuthStore } from "./store/authStore";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "./api/auth.api";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Register />
+      </Layout>
+    ),
+  },
+  {
+    path: "/resetPassword",
+    element: (
+      <Layout>
+        <ResetPassword />
       </Layout>
     ),
   },

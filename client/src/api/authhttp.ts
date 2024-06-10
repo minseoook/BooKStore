@@ -37,13 +37,11 @@ authhttpClient.interceptors.request.use(
 
     if (decodedToken && decodedToken.exp) {
       if (decodedToken.exp * 1000 < currentDate.getTime()) {
-        console.log("리프레쉬 요청", decodedToken);
         const data = await refresh();
-        console.log(data, "데이터");
+
         config.headers["authorization"] = data.accessToken;
         useAuthStore.getState().loginAction(data.accessToken);
       } else {
-        console.log("액세스 요청");
         config.headers["authorization"] = useAuthStore.getState().token;
       }
     }
