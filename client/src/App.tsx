@@ -13,6 +13,7 @@ import { useAuthStore } from "./store/authStore";
 import { jwtDecode } from "jwt-decode";
 import { refresh } from "./api/auth.api";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import BookDetail from "./pages/BookDetail/BookDetail";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Books />
+      </Layout>
+    ),
+  },
+  {
+    path: "/book/:id",
+    element: (
+      <Layout>
+        <BookDetail />
       </Layout>
     ),
   },

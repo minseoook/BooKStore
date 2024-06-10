@@ -1,5 +1,6 @@
 import { Book } from "../models/book.model";
 import { Pagination } from "../models/pagination.model";
+import { authhttpClient } from "./authhttp";
 import { httpClient } from "./http";
 
 interface fetchBooksParams {
@@ -29,4 +30,13 @@ export const fetchBooks = async (params: fetchBooksParams) => {
       },
     };
   }
+};
+export const fetchBook = async (id: string) => {
+  const response = await httpClient.get(`/books/${id}`);
+  return response.data;
+};
+
+export const authfetchBook = async (id: string) => {
+  const response = await authhttpClient.get(`/books/${id}`);
+  return response.data;
 };
