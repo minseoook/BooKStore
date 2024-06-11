@@ -14,6 +14,8 @@ import { jwtDecode } from "jwt-decode";
 import { refresh } from "./api/auth.api";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import BookDetail from "./pages/BookDetail/BookDetail";
+import Carts from "./pages/Carts/Carts";
+import Order from "./pages/Order/Order";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +68,22 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <BookDetail />
+      </Layout>
+    ),
+  },
+  {
+    path: "/carts",
+    element: (
+      <Layout>
+        <Carts />
+      </Layout>
+    ),
+  },
+  {
+    path: "/order",
+    element: (
+      <Layout>
+        <Order />
       </Layout>
     ),
   },

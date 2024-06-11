@@ -47,7 +47,7 @@ const BookDetail = () => {
         </div>
 
         <LikeButton book={book} onClick={toggleLike} />
-        <AddCartButton />
+        <AddCartButton book={book} />
       </div>
     </div>
   );

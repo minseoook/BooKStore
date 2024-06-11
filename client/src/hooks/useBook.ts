@@ -4,11 +4,13 @@ import { useAuthStore } from "../store/authStore";
 import { authfetchBook, fetchBook } from "../api/books.api";
 import { useParams } from "react-router-dom";
 import { likeBook, unLikeBook } from "../api/like.api";
+import { addCart } from "../api/cart.api";
 
 export const useBook = () => {
   const { isloggedIn } = useAuthStore();
   const { id } = useParams();
   const [book, setBook] = useState<BookDetail | null>(null);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
   useEffect(() => {
     if (isloggedIn) {
@@ -39,5 +41,19 @@ export const useBook = () => {
     }
   };
 
-  return { book, toggleLike };
+  const addToCart = (id: number, quantity: number) => {
+    if (!isloggedIn) {
+      alert("로그인 후에 장바구니 담기가 가능합나디");
+      return;
+    }
+    if (!book) return;
+    addCart(id, quantity).then(() => {
+      setIsCartModalOpen(true);
+      setTimeout(() => {
+        setIsCartModalOpen(false);
+      }, 3000);
+    });
+  };
+
+  return { book, toggleLike, addToCart, isCartModalOpen };
 };

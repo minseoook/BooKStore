@@ -34,15 +34,18 @@ const SearchBar = () => {
         onClick={() => setIsModalOpen(!isModalOpen)}
       >
         <input
+          className={styled.search}
           type="text"
           placeholder="검색어를 입력하세요"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <img
-          src="https://img.icons8.com/glassmorphism/48/search.png"
-          alt="search"
-        />
+        <button type="submit" className={styled.searchButton}>
+          <img
+            src="https://img.icons8.com/glassmorphism/48/search.png"
+            alt="search"
+          />
+        </button>
       </form>
       {isModalOpen && (
         <div className={styled.searchContainer} ref={ref}>

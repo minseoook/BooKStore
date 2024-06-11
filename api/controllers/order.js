@@ -27,6 +27,7 @@ const order = async (req, res) => {
   const { items, delivery, totalQuantity, totalPrice, firstBookTitle } =
     req.body;
 
+  console.log(delivery);
   const sql = "insert into delivery(address,receiver, contact) values(?,?,?)";
   const values = [delivery.address, delivery.receiver, delivery.contact];
 
