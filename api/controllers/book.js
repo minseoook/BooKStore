@@ -139,7 +139,7 @@ const getBookDetail = (req, res) => {
         return res.status(StatusCodes.NOT_FOUND).send("책이 없다");
       }
 
-      return res.status(StatusCodes.OK).json(result);
+      return res.status(StatusCodes.OK).json(result[0]);
     });
   } else {
     const values = [token.id, id, id];
@@ -152,7 +152,7 @@ const getBookDetail = (req, res) => {
       if (result.length === 0) {
         return res.status(StatusCodes.NOT_FOUND).send("책이 없다");
       }
-      return res.status(StatusCodes.OK).json(result);
+      return res.status(StatusCodes.OK).json(result[0]);
     });
   }
 };
