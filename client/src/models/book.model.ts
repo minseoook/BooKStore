@@ -22,10 +22,11 @@ export interface BookDetail extends Book {
 
 export interface BookReviewItem {
   id: number;
-  userName: string;
-  content: string;
-  createdAt: string;
-  score: number;
+  user_id: number;
+  book_id: number;
+  email: string;
+  comment: string;
+  created_at: string;
 }
 
-export type BookReviewItemWrite = Pick<BookReviewItem, "content" | "score">;
+export type BookReviewItemWrite = Pick<BookReviewItem, "comment">;

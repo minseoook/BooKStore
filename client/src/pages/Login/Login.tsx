@@ -13,8 +13,8 @@ const Login = () => {
     try {
       e.preventDefault();
       const res = await login({ email, password });
-      console.log(res);
-      loginAction(res.accessToken);
+
+      loginAction(res.accessToken, res[0].isAdmin);
       navigate("/");
     } catch (err) {
       alert("아이디 혹은 비밀번호가 틀립니다");

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { BookDetail } from "../models/book.model";
+import { BookDetail, BookReviewItem } from "../models/book.model";
 import { useAuthStore } from "../store/authStore";
 import { authfetchBook, fetchBook } from "../api/books.api";
 import { useParams } from "react-router-dom";
 import { likeBook, unLikeBook } from "../api/like.api";
 import { addCart } from "../api/cart.api";
+import { getReviewById } from "../api/review.api";
 
 export const useBook = () => {
   const { isloggedIn } = useAuthStore();
   const { id } = useParams();
   const [book, setBook] = useState<BookDetail | null>(null);
+  const [reviews, setreviews] = useState<BookReviewItem[]>([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
   useEffect(() => {
@@ -22,6 +24,9 @@ export const useBook = () => {
         setBook(book);
       });
     }
+    getReviewById(parseInt(id!)).then((review) => {
+      setreviews(review);
+    });
   }, [id, isloggedIn]);
 
   const toggleLike = async (id: number) => {
@@ -55,5 +60,5 @@ export const useBook = () => {
     });
   };
 
-  return { book, toggleLike, addToCart, isCartModalOpen };
+  return { book, toggleLike, addToCart, isCartModalOpen, reviews, setreviews };
 };

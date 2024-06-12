@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import styled from "./header.module.css";
@@ -6,7 +6,8 @@ import { useAuthStore } from "../../store/authStore";
 import { logout } from "../../api/auth.api";
 
 const Header = () => {
-  const { isloggedIn, logoutAction } = useAuthStore();
+  const { isloggedIn, logoutAction, isAdmin } = useAuthStore();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -33,6 +34,11 @@ const Header = () => {
           <SearchBar />
         </div>
         <div className={styled.buttons}>
+          {!!isAdmin && (
+            <button className={styled.admin} onClick={() => navigate("/admin")}>
+              관리자 페이지
+            </button>
+          )}
           {isloggedIn ? (
             <button className={styled.login} onClick={handleLogout}>
               로그아웃

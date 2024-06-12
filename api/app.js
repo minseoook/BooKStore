@@ -12,6 +12,7 @@ const cartsRouter = require("./routes/carts");
 const likesRouter = require("./routes/likes");
 const ordersRouter = require("./routes/orders");
 const categoryRouter = require("./routes/category");
+const reviewsRouter = require("./routes/reviews");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -27,6 +28,7 @@ app.use("/carts", cartsRouter);
 app.use("/likes", likesRouter);
 app.use("/orders", ordersRouter);
 app.use("/category", categoryRouter);
+app.use("/reviews", reviewsRouter);
 
 app.get("/", (req, res) => {
   res.send("hi");

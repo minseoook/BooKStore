@@ -54,3 +54,61 @@
 .detail h2 {
   font-size: 20px;
 }
+.formContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.formContainer label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.submitBtn {
+  background-color: orangered;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.reviewListContainer {
+  max-height: 400px; /* 높이 제한 */
+  overflow-y: auto; /* 넘치는 경우 스크롤 */
+}
+
+.reviewList {
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+}
+
+.reviewItem {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.reviewInfo {
+  margin-bottom: 10px;
+}
+
+.reviewEmail {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reviewComment {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
