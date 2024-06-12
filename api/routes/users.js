@@ -9,6 +9,7 @@ const {
   checkEmail,
   refresh,
   logout,
+  getAllUsers,
 } = require("../controllers/user");
 
 router.post("/login", login);
@@ -26,4 +27,9 @@ router.post("/checkEmail", checkEmail);
 router.post("/refresh", refresh);
 
 router.post("/logout", logout);
+
+router.get("/", getAllUsers);
+
+router.get("/:email", getAllUsers);
+
 module.exports = router;

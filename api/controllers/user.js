@@ -167,10 +167,10 @@ const path = require("path");
 
 dotenv.config();
 
-const refreshTokensFile = path.join(__dirname, "refreshTokens.json");
+const refreshTokensFile = path.join(__dirname, "refreshTokens.json"); //리프레쉬 토큰 저장소 경로찾기
 
 let refreshTokens = [];
-console.log(refreshTokens);
+
 if (fs.existsSync(refreshTokensFile)) {
   const data = fs.readFileSync(refreshTokensFile);
   refreshTokens = JSON.parse(data);
@@ -195,14 +195,14 @@ const join = (req, res) => {
   const salt = crypto.randomBytes(10).toString("base64");
   const hashPassword = crypto
     .pbkdf2Sync(password, salt, 10000, 10, "sha512")
-    .toString("base64");
+    .toString("base64"); //비밀번호 암호화 하는 로직
 
   let sql = "insert into users (email, password,salt) values (?,?,?)";
   let values = [email, hashPassword, salt];
   conn.query(sql, values, (err, result) => {
     if (err) {
       console.log(err);
-      return res.status(StatusCodes.BAD_REQUEST).end();
+      return res.status(StatusCodes.BAD_REQUEST).end(); //디비 문제, 입력값 문제
     }
     if (result.affectedRows) {
       return res.status(StatusCodes.CREATED).json("회원가입 성공");
@@ -266,10 +266,10 @@ const refresh = (req, res) => {
 
   jwt.verify(refreshToken, process.env.REFRESHJWYKEY, (err, result) => {
     if (err) {
-      console.log(err);
+      console.log("만료");
       res.clearCookie("token");
       removeRefreshToken(refreshToken);
-      return res.status(401).json("인증불가");
+      return res.status(401).json("인증불가"); //토큰이 만료된 케이스
     }
 
     const accessToken = jwt.sign({ id: result.id }, process.env.ACCESSJWTKEY, {
@@ -346,6 +346,32 @@ const logout = (req, res) => {
   return res.status(StatusCodes.OK).json("로그아웃 성공");
 };
 
+const getAllUsers = (req, res) => {
+  const sql = "SELECT * FROM users";
+  conn.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(StatusCodes.BAD_REQUEST).json("서버 오류");
+    }
+    return res.status(StatusCodes.OK).json(results);
+  });
+};
+const getUserByEmail = (req, res) => {
+  const { email } = req.params;
+  const sql = "SELECT * FROM users WHERE email = ?";
+  const values = [email];
+
+  conn.query(sql, values, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(StatusCodes.BAD_REQUEST).json("서버 오류");
+    }
+    if (results.length === 0) {
+      return res.status(StatusCodes.NOT_FOUND).json("유저를 찾을 수 없습니다");
+    }
+    return res.status(StatusCodes.OK).json(results[0]);
+  });
+};
 module.exports = {
   join,
   login,
@@ -354,4 +380,6 @@ module.exports = {
   checkEmail,
   refresh,
   logout,
+  getAllUsers,
+  getUserByEmail,
 };
