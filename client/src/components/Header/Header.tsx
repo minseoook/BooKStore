@@ -39,6 +39,14 @@ const Header = () => {
               관리자 페이지
             </button>
           )}
+          {!!isAdmin && (
+            <button
+              className={styled.admin}
+              onClick={() => navigate("/admin/addbook")}
+            >
+              상품 등록하기
+            </button>
+          )}
           {isloggedIn ? (
             <button className={styled.login} onClick={handleLogout}>
               로그아웃

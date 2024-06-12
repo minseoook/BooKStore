@@ -94,26 +94,32 @@ const Admin = () => {
       </div>
       <div className={styled.table}>
         <h2>
-          총 {activeTab} 수: {totalCount}
+          총
+          {activeTab === "users"
+            ? "유저"
+            : activeTab === "products"
+            ? "도서"
+            : "주문"}{" "}
+          수: {totalCount}
         </h2>
         <table>
           <thead>
             <tr>
               {activeTab === "users" && (
                 <>
-                  <th>User ID</th>
-                  <th>Email</th>
+                  <th>유저 ID</th>
+                  <th>이메일</th>
                 </>
               )}
               {activeTab === "products" && (
                 <>
-                  <th>Product ID</th>
-                  <th>Name</th>
+                  <th>북 ID</th>
+                  <th>책이름</th>
                 </>
               )}
               {activeTab === "orders" && (
                 <>
-                  <th>Order ID</th>
+                  <th>주문 ID</th>
                   <th>수령인,대표 책제목, 가격</th>
                 </>
               )}
