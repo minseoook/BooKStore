@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { likeBook, unLikeBook } from "../api/like.api";
 import { addCart } from "../api/cart.api";
 import { getReviewById } from "../api/review.api";
+import { useToast } from "./useToast";
 
 export const useBook = () => {
   const { isloggedIn } = useAuthStore();
@@ -14,6 +15,7 @@ export const useBook = () => {
   const [reviews, setreviews] = useState<BookReviewItem[]>([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
+  const { showToast } = useToast();
   useEffect(() => {
     if (isloggedIn) {
       authfetchBook(id!).then((book) => {
@@ -39,10 +41,12 @@ export const useBook = () => {
       unLikeBook(id).then(() => {
         setBook({ ...book, liked: false, likes: book.likes - 1 });
       });
+      showToast("좋아요가 취소 되었습니다");
     } else {
       likeBook(id).then(() => {
         setBook({ ...book, liked: true, likes: book.likes + 1 });
       });
+      showToast("좋아요가 성공 되었습니다");
     }
   };
 

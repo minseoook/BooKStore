@@ -17,6 +17,8 @@ import BookDetail from "./pages/BookDetail/BookDetail";
 import Carts from "./pages/Carts/Carts";
 import Order from "./pages/Order/Order";
 import Admin from "./pages/Admin/Admin";
+import AddBook from "./pages/Admin/AddBook/AddBook";
+import ToastContainer from "./components/Toast/ToastContainer";
 
 const router = createBrowserRouter([
   {
@@ -96,6 +98,14 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  {
+    path: "/admin/addBook",
+    element: (
+      <Layout>
+        <AddBook />
+      </Layout>
+    ),
+  },
 ]);
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -130,6 +140,7 @@ function App() {
   return (
     <div data-theme={theme} className="app-container">
       <RouterProvider router={router} />
+      <ToastContainer />
     </div>
   );
 }

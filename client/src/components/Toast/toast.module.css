@@ -1,0 +1,65 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.container {
+  /* background-color: var(--color-background); */
+  padding: 12px;
+  /* border-radius: var(--border-radius-default); */
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 24px;
+  /* opacity: 0;
+  transition: all 0.3s ease-in-out; */
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.fadeOut {
+  animation: fadeOut 0.3s ease-in-out forwards;
+}
+.error {
+  background-color: #dc3545; /* Bootstrap red */
+}
+
+.success {
+  background-color: #28a745; /* Bootstrap green */
+}
+p {
+  /* color: var(--color-text); */
+  line-height: 1;
+  margin: 0;
+  flex: 1;
+  display: flex;
+  align-items: end;
+  gap: 4px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+button svg {
+  transform: rotate(45deg);
+}
