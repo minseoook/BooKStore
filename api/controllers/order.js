@@ -70,30 +70,51 @@ const deleteCartItems = async (conn, items) => {
 };
 
 const getOrders = async (req, res) => {
-  const conn = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    port: 3307,
-    database: "bookshop",
-    dateStrings: true,
-  });
-  const token = verifyToken(req, res);
-  if (token instanceof jwt.TokenExpiredError) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "로그인 다시 하세요" });
-  }
-  if (token instanceof jwt.JsonWebTokenError) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "토큰 값이 이상합니다" });
-  }
+  try {
+    const conn = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "root",
+      port: 3307,
+      database: "bookshop",
+      dateStrings: true,
+    });
 
-  const sql =
-    "select orders.id,book_title,total_quantity,total_price,created_at,address,receiver,contact from orders left join delivery on orders.delivery_id = delivery.id";
-  const [rows, fields] = await conn.query(sql);
-  return res.status(StatusCodes.OK).json(rows);
+    const token = verifyToken(req, res);
+    if (token instanceof jwt.TokenExpiredError) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "로그인 다시 하세요" });
+    }
+    if (token instanceof jwt.JsonWebTokenError) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "토큰 값이 이상합니다" });
+    }
+
+    const page = parseInt(req.query.currentPage) || 1;
+    const pageSize = 8;
+    const offset = (page - 1) * pageSize;
+
+    const totalOrderCountQuery = "SELECT COUNT(*) AS totalCount FROM orders";
+    const [totalCountResult] = await conn.query(totalOrderCountQuery);
+    const totalCount = totalCountResult[0].totalCount;
+
+    const sql = `
+      SELECT orders.id, book_title, total_quantity, total_price, created_at, address, receiver, contact
+      FROM orders
+      LEFT JOIN delivery ON orders.delivery_id = delivery.id
+      LIMIT ?, ?
+    `;
+    const [rows, fields] = await conn.query(sql, [offset, pageSize]);
+
+    return res.status(StatusCodes.OK).json({ data: rows, totalCount });
+  } catch (error) {
+    console.error(error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "서버 오류",
+    });
+  }
 };
 
 const getOrderDetails = async (req, res) => {

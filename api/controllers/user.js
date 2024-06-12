@@ -347,15 +347,34 @@ const logout = (req, res) => {
 };
 
 const getAllUsers = (req, res) => {
-  const sql = "SELECT * FROM users";
-  conn.query(sql, (err, results) => {
+  const page = parseInt(req.query.currentPage) || 1;
+  const pageSize = 8;
+  const offset = (page - 1) * pageSize;
+
+  const countQuery = "SELECT COUNT(*) AS total FROM users";
+
+  conn.query(countQuery, (err, countResult) => {
     if (err) {
       console.log(err);
       return res.status(StatusCodes.BAD_REQUEST).json("서버 오류");
     }
-    return res.status(StatusCodes.OK).json(results);
+
+    const totalCount = countResult[0].total;
+
+    const sql = `SELECT * FROM users LIMIT ?, ?`;
+    const values = [offset, pageSize];
+    conn.query(sql, values, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(StatusCodes.BAD_REQUEST).json("서버 오류");
+      }
+
+      // 결과를 클라이언트에게 반환할 때 전체 사용자 수와 함께 반환
+      return res.status(StatusCodes.OK).json({ data: results, totalCount });
+    });
   });
 };
+
 const getUserByEmail = (req, res) => {
   const { email } = req.params;
   const sql = "SELECT * FROM users WHERE email = ?";

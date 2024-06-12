@@ -16,6 +16,7 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import BookDetail from "./pages/BookDetail/BookDetail";
 import Carts from "./pages/Carts/Carts";
 import Order from "./pages/Order/Order";
+import Admin from "./pages/Admin/Admin";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Order />
+      </Layout>
+    ),
+  },
+  {
+    path: "/admin",
+    element: (
+      <Layout>
+        <Admin />
       </Layout>
     ),
   },
