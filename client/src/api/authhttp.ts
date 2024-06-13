@@ -27,7 +27,7 @@ export const authhttpClient = axios.create({
 //   );
 authhttpClient.interceptors.request.use(
   async (config) => {
-    const { token } = useAuthStore.getState();
+    const { token, isAdmin } = useAuthStore.getState();
     if (!token) {
       window.location.href = "/login";
       return Promise.reject();
@@ -40,7 +40,7 @@ authhttpClient.interceptors.request.use(
         const data = await refresh();
 
         config.headers["authorization"] = data.accessToken;
-        useAuthStore.getState().loginAction(data.accessToken);
+        useAuthStore.getState().loginAction(data.accessToken, isAdmin);
       } else {
         config.headers["authorization"] = useAuthStore.getState().token;
       }

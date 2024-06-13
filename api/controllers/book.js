@@ -157,6 +157,52 @@ const getBookDetail = (req, res) => {
   }
 };
 
+const addBook = (req, res) => {
+  const {
+    title,
+    img,
+    category_id,
+    form,
+    isbn,
+    summary,
+    detail,
+    author,
+    pages,
+    contents,
+    price,
+    pub_date,
+  } = req.body;
+
+  const sql = `INSERT INTO books (title, img, category_id, form, isbn, summary, detail, author, pages, contents, price, pub_date)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const values = [
+    title,
+    img,
+    category_id,
+    form,
+    isbn,
+    summary,
+    detail,
+    author,
+    pages,
+    contents,
+    price,
+    pub_date,
+  ];
+
+  conn.query(sql, values, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: "책을 입력하는 동안 오류가 발생했습니다." });
+    }
+
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ message: "책이 성공적으로 입력되었습니다." });
+  });
+};
 // const getBooksByCategory = (req, res) => {
 //   let { category_id } = req.query;
 
@@ -172,7 +218,7 @@ const getBookDetail = (req, res) => {
 //   });
 // };
 
-module.exports = { getAllBooks, getBookDetail };
+module.exports = { getAllBooks, getBookDetail, addBook };
 
 // SELECT count(*) FROM bookshop.likes where liked_book_id = 1;
 // select *,(SELECT count(*) FROM bookshop.likes where liked_book_id = books.id) as likes from books

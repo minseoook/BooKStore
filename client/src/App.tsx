@@ -109,7 +109,7 @@ const router = createBrowserRouter([
 ]);
 function App() {
   const { theme } = useContext(ThemeContext);
-  const { token, logoutAction, loginAction } = useAuthStore();
+  const { token, logoutAction, loginAction, isAdmin } = useAuthStore();
 
   useEffect(() => {
     const checkTokenValidity = async () => {
@@ -121,7 +121,7 @@ function App() {
           if (decodedToken.exp * 1000 < currentDate.getTime()) {
             try {
               const data = await refresh();
-              loginAction(data.accessToken);
+              loginAction(data.accessToken, isAdmin);
             } catch (error) {
               logoutAction();
             }

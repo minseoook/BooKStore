@@ -120,24 +120,34 @@ const Admin = () => {
               {activeTab === "orders" && (
                 <>
                   <th>주문 ID</th>
-                  <th>수령인,대표 책제목, 가격</th>
+                  <th>수령인</th>
+                  <th>대표 책제목</th>
+                  <th>주문 일자</th>
+                  <th>배송주소</th>
                 </>
               )}
             </tr>
           </thead>
           <tbody>
-            {data.map((item: User | Book | Order) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>
-                  {(item as User).email ||
-                    (item as Book).title ||
-                    `${(item as Order).receiver} , ${
-                      (item as Order).book_title
-                    }, ${(item as Order).total_price}`}
-                </td>
-              </tr>
-            ))}
+            {data.map((item: User | Book | Order) => {
+              if (activeTab === "orders") {
+                return (
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{(item as Order).receiver}</td>
+                    <td>{(item as Order).book_title}</td>
+                    <td>{(item as Order).created_at}</td>
+                    <td>{(item as Order).address}</td>
+                  </tr>
+                );
+              }
+              return (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{(item as User).email || (item as Book).title}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <div className={styled.pagination}>

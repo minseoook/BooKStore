@@ -1,7 +1,7 @@
 import { FaHeart } from "react-icons/fa";
 import { Book } from "../../models/book.model";
 import { formatNumber } from "../../utils/format";
-import { getImgSrc } from "../../utils/image";
+
 import styled from "./bookItem.module.css";
 import { Link } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const BookItem = ({ book }: Props) => {
     <Link to={`/book/${book.id}`}>
       <div className={styled.container}>
         <div className={styled.img}>
-          <img src={getImgSrc(book.id)} alt={book.title} />
+          <img src={book.img} alt={book.title} />
         </div>
         <div className={styled.content}>
           <h2 className={styled.title}>{book.title}</h2>

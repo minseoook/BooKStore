@@ -3,7 +3,7 @@ import AddCartButton from "../../components/AddCartButton/AddCartButton";
 import LikeButton from "../../components/Likebutton/LikeButton";
 import { useBook } from "../../hooks/useBook";
 import { formatDay } from "../../utils/day";
-import { getImgSrc } from "../../utils/image";
+
 import styled from "./bookdetail.module.css";
 import { addReview, getReviewById } from "../../api/review.api";
 import ReviewEmpty from "../../components/ReviewEmpty/ReviewEmpty";
@@ -39,13 +39,13 @@ const BookDetail = () => {
       <div className={styled.container}>
         <div className={styled.left}>
           <img
-            src={getImgSrc(book.img)}
+            src={book.img}
             alt="bookimage"
             className={styled.bookImage}
             onClick={() => setIsModalOpen(true)}
           />
           {isModalOpen && (
-            <Modal img={getImgSrc(book.img)} setIsModalOpen={setIsModalOpen} />
+            <Modal img={book.img} setIsModalOpen={setIsModalOpen} />
           )}
         </div>
         <div className={styled.right}>
