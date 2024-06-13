@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const verifyToken = require("../auth");
 
 const addReview = (req, res) => {
-  const { book_id, comment } = req.body;
+  const { book_id, comment, rating } = req.body;
 
   const token = verifyToken(req, res);
   if (token instanceof jwt.TokenExpiredError) {
@@ -18,8 +18,8 @@ const addReview = (req, res) => {
       .json({ message: "토큰 값이 이상합니다" });
   }
   const sql =
-    "INSERT INTO reviews (user_id, book_id, comment) VALUES (?, ?, ?)";
-  const values = [token.id, book_id, comment];
+    "INSERT INTO reviews (user_id, book_id, comment,rating) VALUES (?, ?, ?, ?)";
+  const values = [token.id, book_id, comment, rating];
 
   conn.query(sql, values, (err, result) => {
     if (err) {

@@ -1,7 +1,24 @@
 .container {
   max-width: 1200px;
-  height: 150px;
+  height: 250px;
   margin-bottom: 200px;
+  position: relative;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.75;
+  color: black; /* 기본 화살표 색상 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 1; /* 화살표가 다른 요소 위에 보이도록 설정 */
 }
 
 .img {

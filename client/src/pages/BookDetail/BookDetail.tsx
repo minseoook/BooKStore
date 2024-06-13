@@ -7,14 +7,22 @@ import { getImgSrc } from "../../utils/image";
 import styled from "./bookdetail.module.css";
 import { addReview, getReviewById } from "../../api/review.api";
 import ReviewEmpty from "../../components/ReviewEmpty/ReviewEmpty";
+import Modal from "../../components/Modal/Modal";
+import { FaStar } from "react-icons/fa";
 
 const BookDetail = () => {
   const { book, toggleLike, reviews, setreviews } = useBook();
   const [comment, setComment] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rating, setrating] = useState(0);
   if (!book) return null;
 
   const handleReviewSubmit = () => {
-    addReview(book.id, comment).then(() => {
+    if (rating === 0) {
+      alert("별점평가 부탁드립니다");
+      return;
+    }
+    addReview(book.id, comment, rating).then(() => {
       alert("도서 후기 작성에 성공했습니다");
       setComment("");
       getReviewById(book.id).then((review) => {
@@ -22,8 +30,10 @@ const BookDetail = () => {
       });
     });
   };
+  const handleClick = (value: number) => {
+    setrating(value);
+  };
 
-  console.log(reviews);
   return (
     <>
       <div className={styled.container}>
@@ -32,7 +42,11 @@ const BookDetail = () => {
             src={getImgSrc(book.img)}
             alt="bookimage"
             className={styled.bookImage}
+            onClick={() => setIsModalOpen(true)}
           />
+          {isModalOpen && (
+            <Modal img={getImgSrc(book.img)} setIsModalOpen={setIsModalOpen} />
+          )}
         </div>
         <div className={styled.right}>
           <p className={styled.pubDate}>{formatDay(book.pub_date)}</p>
@@ -54,11 +68,11 @@ const BookDetail = () => {
             </p>
           </div>
           <div className={styled.summary}>
-            <h2>Summary</h2>
+            <h2>요약</h2>
             <p>{book.summary}</p>
           </div>
           <div className={styled.detail}>
-            <h2>Detail</h2>
+            <h2>세부정보</h2>
             <p>{book.detail}</p>
           </div>
 
@@ -74,6 +88,17 @@ const BookDetail = () => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
+        <div>
+          {[...Array(5)].map((_, index) => (
+            <FaStar
+              key={index}
+              size={30}
+              onClick={() => handleClick(index + 1)}
+              color={index + 1 <= rating ? "#ffc107" : "#e4e5e9"}
+              style={{ cursor: "pointer", marginRight: 5 }}
+            />
+          ))}
+        </div>
         <button
           type="submit"
           className={styled.submitBtn}
@@ -92,6 +117,14 @@ const BookDetail = () => {
                 <p className={styled.reviewEmail}>{review.email}</p>
                 <p className={styled.reviewDate}>{review.created_at}</p>
               </div>
+              {[...Array(review.rating)].map((_, index) => (
+                <FaStar
+                  key={index}
+                  size={10}
+                  color={"#ffc107"}
+                  style={{ cursor: "pointer", marginRight: 5 }}
+                />
+              ))}
               <p className={styled.reviewComment}>{review.comment}</p>
             </li>
           ))}

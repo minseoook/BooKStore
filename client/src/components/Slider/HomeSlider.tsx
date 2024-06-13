@@ -13,6 +13,8 @@ const HomeSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     lazyLoad: "ondemand" as const,
+    autoplay: true,
+    autoplaySpeed: 3000,
   };
   return (
     <div className={styled.container}>

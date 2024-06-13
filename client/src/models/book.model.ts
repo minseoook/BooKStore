@@ -26,6 +26,7 @@ export interface BookReviewItem {
   book_id: number;
   email: string;
   comment: string;
+  rating: number;
   created_at: string;
 }
 

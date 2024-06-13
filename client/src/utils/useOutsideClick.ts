@@ -3,8 +3,6 @@ import { useEffect } from "react";
 export default function useOutsideClick(ref, handler) {
   useEffect(() => {
     function listener(event) {
-      console.log(event.target.tagName);
-
       if (
         !ref.current ||
         ref.current.contains(event.target) ||
